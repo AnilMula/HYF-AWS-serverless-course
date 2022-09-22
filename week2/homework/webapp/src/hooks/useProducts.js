@@ -1,35 +1,6 @@
-import { useState } from "react";
-
-const productsData = [
-  {
-    id: 1,
-    name: "Fruits",
-    imageURL:
-      "https://www.kirbysproduce.com/wp-content/uploads/2020/04/produce-box.jpg",
-    description: "Wonderful fruits from all over the world",
-    price: "50",
-    currency: "DKK",
-  },
-  {
-    id: 2,
-    name: "Vegetables",
-    imageURL:
-      "https://www.kirbysproduce.com/wp-content/uploads/2020/04/produce-box.jpg",
-    description: "Wonderful vegetables from all over the world",
-    price: "50",
-    currency: "DKK",
-  },
-  {
-    id: 3,
-    name: "Juice Box",
-    imageURL:
-      "https://www.kirbysproduce.com/wp-content/uploads/2020/04/produce-box.jpg",
-    description: "Great box for your juicer",
-    price: "50",
-    currency: "DKK",
-  },
-];
-
+import { useState } from 'react';
+import Data from '../products.json';
+const productsData = Data.products;
 let initialProducts = productsData.map((item) => {
   return { ...item, selected: false };
 });
@@ -44,11 +15,13 @@ function useProducts() {
   };
 
   const removeProduct = (product) => {
-    setCart(cart.filter((item) => item.id != product.id));
+    setCart(cart.filter((item) => item.id !== product.id));
   };
 
   const calculateSum = (cart) => {
-    return '?';
+    let totalAmount = 0;
+    cart.forEach((product) => (totalAmount += parseInt(product.price)));
+    return totalAmount;
   };
 
   return { products, cart, addProduct, removeProduct, calculateSum };
